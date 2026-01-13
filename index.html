@@ -20,7 +20,12 @@
 
       <section class="capsula-form">
         <h3>PORQUE TUS COMENTARIOS NOS IMPORTA🍗</h3>
-        <form action="/resena" method="post" id="formulario" autocomplete="off">
+        <form
+          action="https://formspree.io/f/xojjqkag"
+          method="post"
+          id="formulario"
+          autocomplete="off"
+        >
           <!--NOMBRE COMPLETO-->
           <label for="name"
             >Nombre Completo<span aria-hidden="true">*</span></label
@@ -44,7 +49,6 @@
             name="pregunta1"
             minlength="5"
             maxlength="100"
-            pattern="^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             placeholder="aqui tu respuesta"
             required
           />
@@ -56,7 +60,6 @@
             name="pregunta2"
             minlength="5"
             maxlength="100"
-            pattern="^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             placeholder="aqui tu respuesta"
             required
           />
@@ -189,5 +192,14 @@
         }
       });
     </script>-->
+    <script>
+      const form = document.getElementById("formulario");
+
+      form.addEventListener("submit", () => {
+        setTimeout(() => {
+          form.reset();
+        }, 500);
+      });
+    </script>
   </body>
 </html>
