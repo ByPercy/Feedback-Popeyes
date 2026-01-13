@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Feedback</title>
+  </head>
+  <body>
+    <header>
+      <div class="Cont_header">
+        <h4>Feedback</h4>
+        <a href="index.html"
+          ><img src="img/Popeyes_Logo_2020.svg.png" alt="Logo_Popeyes"
+        /></a>
+      </div>
+    </header>
+    <main>
+      <h1>AURORA</h1>
+
+      <section class="capsula-form">
+        <h3>PORQUE TUS COMENTARIOS NOS IMPORTA🍗</h3>
+        <form action="/resena" method="post" id="formulario" autocomplete="off">
+          <!--NOMBRE COMPLETO-->
+          <label for="name"
+            >Nombre Completo<span aria-hidden="true">*</span></label
+          >
+          <input
+            type="text"
+            id="name"
+            name="nombre"
+            minlength="3"
+            maxlength="60"
+            aria-describedby="nam"
+            placeholder="Ej:Gian Carlos"
+            required
+          />
+          <small id="help">3 a 60 caracteres</small>
+          <!--pregunta 1-->
+          <label for="pregunta">¿Es tu primera vez comiendo popeyes?</label>
+          <input
+            type="text"
+            id="pregunta"
+            name="pregunta1"
+            minlength="5"
+            maxlength="100"
+            pattern="^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            placeholder="aqui tu respuesta"
+            required
+          />
+          <!--pregunta 2-->
+          <label for="pregunta">¿Qué es lo que mas te gustó?</label>
+          <input
+            type="text"
+            id="pregunta"
+            name="pregunta2"
+            minlength="5"
+            maxlength="100"
+            pattern="^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            placeholder="aqui tu respuesta"
+            required
+          />
+          <div class="Clasificacion">
+            <!--CALIFICACION-->
+            <h3>Calificación y comentario</h3>
+            <input type="radio" name="rating" value="5" id="star5" required />
+            <label for="star5">★</label>
+            <input type="radio" name="rating" value="4" id="star4" />
+            <label for="star4">★</label>
+            <input type="radio" name="rating" value="3" id="star3" />
+            <label for="star3">★</label>
+            <input type="radio" name="rating" value="2" id="star2" />
+            <label for="star2">★</label>
+            <input type="radio" name="rating" value="1" id="star1" />
+            <label for="star1">★</label>
+          </div>
+          <!--RESEÑA-->
+          <label for="reseña">¿Qué cosa deberiamos mejorar?</label>
+          <textarea
+            id="reseña"
+            name="resena"
+            minlength="5"
+            placeholder="comenta en que podemos mejorar"
+            required
+          ></textarea>
+          <!--imagen(opcional)
+          <label for="imagen">Compartenos tu Experiencia(opcional)*</label>
+          <input
+            type="file"
+            id="imagen"
+            name="imagen"
+            accept="image/png, image/jpeg, image/webp"
+          />-->
+          <button type="submit">ENVIAR <span>➜</span></button>
+        </form>
+      </section>
+
+      <!-- LISTA DE RESEÑAS
+      <section class="reseñas">
+        <h2>Reseñas Recientes</h2>
+
+        --reseña de ejemplo--
+        <div id="resenas-container"></div>
+        <article class="reseña">
+          <strong>Juan</strong>
+          <div class="estrellas">★★★★☆</div>
+          <div class="pregunta1"><p>muy buena</p></div>
+          <div class="pregunta2"><p>extraordinaria</p></div>
+          <p>
+            Muy buena atención, muy buenos pollos y el tiempo de atencion es la
+            mejor muy contento con todo lo que ofrece popeyes Aurora
+          </p>
+        </article>
+      </section>-->
+    </main>
+    <footer>
+      <div class="Pie_Logo">
+        <img src="img/Popeyes-Logo-PNG-Clipart.png" alt="" />
+      </div>
+    </footer>
+
+    <!--<script>
+      async function cargarResenas() {
+        try {
+          const res = await fetch("/resenas");
+          if (!res.ok) throw new Error("Error al traer reseñas: " + res.status);
+
+          const reseñas = await res.json();
+          const container = document.getElementById("resenas-container");
+          container.innerHTML = "";
+
+          reseñas.forEach((r) => {
+            const article = document.createElement("article");
+            article.className = "reseña";
+
+            const estrellas =
+              "★".repeat(Number(r.rating)) + "☆".repeat(5 - Number(r.rating));
+
+            console.log("Datos de la reseña:", r);
+
+            article.innerHTML = `
+          <strong>${r.nombre}</strong>
+          <div class="estrellas">${estrellas}</div>
+          <div class="pregunta1"><h5>Pre1: </h5>${r.pregunta1}</div>
+          <div class="pregunta1"><h5>Pre2: </h5>${r.pregunta2}</div>
+          <p><h5>Com:</h5>${r.resena}</p>
+        `;
+
+            container.appendChild(article);
+          });
+        } catch (err) {
+          console.error("Error cargando reseñas:", err);
+        }
+      }
+
+      cargarResenas(); // Carga al abrir la página
+    </script>
+
+    <script>
+      const form = document.getElementById("formulario");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = new FormData(form);
+        const body = Object.fromEntries(data.entries());
+
+        // Convertir rating a número
+        if (body.rating) body.rating = parseInt(body.rating);
+
+        console.log("ENVIANDO BODY:", body); // Para depuración
+
+        try {
+          const res = await fetch("/resena", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok)
+            throw new Error(result.error || "Error al enviar la reseña");
+
+          form.reset();
+          cargarResenas();
+        } catch (err) {
+          console.error(err);
+          alert(err.message);
+        }
+      });
+    </script>-->
+  </body>
+</html>
