@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 // Conectar antes de escuchar
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Servir archivos estáticos (CSS, imágenes, etc.)
 
@@ -25,25 +25,26 @@ app.get("/", (req, res) => {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "spectermusicsong@gmail.com",
-    pass: "axfa ojcr qqzp ncef",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
 app.post("/resena", async (req, res) => {
-  const { nombre, pregunta1, rating, resena } = req.body;
+  const { nombre, pregunta1, pregunta2, rating, resena } = req.body;
 
   try {
     await transporter.sendMail({
-      from: `"Reseñas Popeyes 🍗" <TU_CORREO@gmail.com>`,
-      to: "CORREO_DESTINO@empresa.com",
+      from: `"Reseñas Popeyes 🍗" <spectermusicsong@gmail.com>`,
+      to: "spectermusicsong@gmail.com",
       subject: "Nueva reseña recibida",
       html: `
         <h2>Nueva reseña</h2>
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>P1-¿Es tu primera vez comiendo popeyes?:</strong> ${pregunta1}</p>
-        <p><strong>Calificación:</strong> ${rating} ⭐</p>
-        <p><strong>Comentario:</strong></p>
+        <p><strong>Nombre: </strong> ${nombre}</p>
+        <p><strong>P1-¿Es tu primera vez comiendo popeyes?🍗: </strong> ${pregunta1}</p>
+        <p><strong>P2-¿Qué es lo que mas te gustó?😋: </strong> ${pregunta2}</p>
+        <p><strong>Calificación: </strong> ${rating} ⭐</p>
+        <p><strong>---::RESEÑA::--</strong></p>
         <p>${resena}</p>
       `,
     });
