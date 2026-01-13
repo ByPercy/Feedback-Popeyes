@@ -36,7 +36,7 @@ app.post("/resena", async (req, res) => {
   try {
     await transporter.sendMail({
       from: `"Reseñas Popeyes 🍗" <feedbackpopeyes@gmail.com>`,
-      to: "process.env.EMAIL_TO,",
+      to: process.env.EMAIL_TO,
       subject: "Nueva reseña recibida",
       html: `
         <h2>Nueva reseña</h2>
