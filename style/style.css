@@ -222,12 +222,14 @@ textarea:focus {
 
 footer {
   background-color: rgb(27, 27, 27);
-  height: 10%;
+  height: 9600px;
+  width: 100%;
 }
 
 .Pie_Logo img {
-  width: 15%;
-  margin-top: 10px;
+  width: 19%;
+  margin-top: 19px;
+  margin-bottom: 20px;
 }
 
 .reseñas {
